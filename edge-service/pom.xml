@@ -17,8 +17,6 @@
             <artifactId>common-models</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <!-- Any edge-service specific dependencies -->
     </dependencies>
 
     <build>
