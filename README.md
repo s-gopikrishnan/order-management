@@ -59,27 +59,6 @@ order-management/
 
 ---
 
-## ⚙️ Running Locally (Without Docker)
-
-You can run Kafka via Docker Compose and start services manually.
-
-### 1️⃣ Start Kafka & Zookeeper
-
-```bash
-docker-compose -f docker-compose.kafka.yml up -d
-```
-
-### 2️⃣ Run a microservice
-
-```bash
-cd edge-service
-./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
-```
-
-> **Note:** `dev` profile points Kafka to `localhost:9092`.
-
----
-
 ## 🐳 Running with Docker Compose (Recommended for full stack)
 
 To start **all services + Kafka** together:
@@ -113,6 +92,21 @@ SPRING_PROFILES_ACTIVE=docker java -jar app.jar
 ```
 ---
 
+## Example Command to initiate the flow
+
+```
+curl --location 'localhost:8090/orders' \
+--header 'Content-Type: application/json' \
+--data '{
+    "customerId": "OMS-Cust-001",
+    "totalAmount": 2599.99,
+    "productIds": [
+        "item1",
+        "item2"
+    ]
+}'
+```
+---
 ## 📌 Future Improvements
 - Add centralized configuration service (Spring Cloud Config)
 - Add observability (Prometheus, Grafana, Zipkin)
