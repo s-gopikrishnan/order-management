@@ -18,6 +18,8 @@ The system consists of:
 
 Communication between services happens via **Kafka topics**.
 
+![System Architecture](docs/architecture.png)
+
 
 ## 🧪 Example Flow
 
