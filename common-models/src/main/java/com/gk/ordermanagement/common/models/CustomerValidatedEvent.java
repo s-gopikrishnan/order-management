@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerValidatedEvent implements BaseEvent{
 	private String orderId;
-	private String customerId;
-	private double amount;
-
+	private OrderRequest order;
 }

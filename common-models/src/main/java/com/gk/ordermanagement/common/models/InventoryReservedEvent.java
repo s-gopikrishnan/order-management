@@ -11,4 +11,5 @@ public class InventoryReservedEvent implements BaseEvent {
 
 	private String orderId;
 	private boolean isInventoryReserved;
+	private OrderRequest order;
 }

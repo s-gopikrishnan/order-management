@@ -45,7 +45,7 @@ public class PaymentEventListener {
 		if (Boolean.TRUE.equals(inventoryStatus.get(orderId)) && customerStatus.get(orderId) != null) {
 			// Process payment
 			CustomerValidatedEvent customerEvent = customerStatus.get(orderId);
-			kafkaTemplate.send("payment-processed", new PaymentProcessedEvent(orderId, customerEvent.getCustomerId(), customerEvent.getAmount()));
+			kafkaTemplate.send("payment-processed", new PaymentProcessedEvent(orderId, customerEvent.getOrder()));
 		}
 	}
 }

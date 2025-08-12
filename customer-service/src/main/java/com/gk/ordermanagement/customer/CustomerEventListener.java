@@ -25,10 +25,10 @@ public class CustomerEventListener {
         // Validate customer
         boolean isValid = true;
         
-		logger.info("[{}] Processing Customer Event: {}", event.getOrderId(), event.getCustomerId());
+		logger.info("[{}] Processing Customer Event: {}", event.getOrderId(), event.getOrder());
 
         if (isValid) {
-            kafkaTemplate.send("customer-validated", new CustomerValidatedEvent(event.getOrderId(), event.getCustomerId(), event.getTotalAmount()));
+            kafkaTemplate.send("customer-validated", new CustomerValidatedEvent(event.getOrderId(), event.getOrder()));
         } else {
             kafkaTemplate.send("customer-failed", new CustomerFailedEvent(event.getOrderId()));
         }

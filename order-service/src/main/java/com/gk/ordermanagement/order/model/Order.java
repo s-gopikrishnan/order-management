@@ -1,5 +1,7 @@
 package com.gk.ordermanagement.order.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,4 +20,6 @@ public class Order {
 	private String customerId;
 	private double amount;
 	private String status;
+	private LocalDateTime placedTime;
+	private LocalDateTime confirmedTime;
 }

@@ -25,10 +25,10 @@ public class InventoryEventListener {
 		// Mock stock check
 		boolean inStock = true;
 
-		logger.info("[{}] Processing Inventory Event: {}", event.getOrderId(), event.getCustomerId());
+		logger.info("[{}] Processing Inventory Event: {}", event.getOrderId(), event.getOrder());
 
 		if (inStock) {
-			InventoryReservedEvent reservedEvent = new InventoryReservedEvent(event.getOrderId(), inStock);
+			InventoryReservedEvent reservedEvent = new InventoryReservedEvent(event.getOrderId(), inStock, event.getOrder());
 			kafkaTemplate.send("inventory-reserved", reservedEvent);
 		} else {
 			kafkaTemplate.send("inventory-failed", new InventoryFailedEvent(event.getOrderId()));

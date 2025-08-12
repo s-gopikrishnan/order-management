@@ -1,5 +1,6 @@
 package com.gk.ordermanagement.edge.controller;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -20,25 +21,27 @@ import com.gk.ordermanagement.common.models.OrderRequest;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
-    @Autowired
-    private KafkaTemplate<String, BaseEvent> kafkaTemplate;
-    
-    @PostMapping
-    public ResponseEntity<?> placeOrder(@RequestBody OrderRequest request) {
+	@Autowired
+	private KafkaTemplate<String, BaseEvent> kafkaTemplate;
+
+	@PostMapping
+	public ResponseEntity<?> placeOrder(@RequestBody OrderRequest request) {
 		String correlationId = UUID.randomUUID().toString();
 		logger.info("[{}] Processing order request: {}", correlationId, request);
+		request.setOrderId(correlationId);
+		request.setPlacedTime(LocalDateTime.now());
 
-        OrderPlacedEvent event = new OrderPlacedEvent(correlationId, request.getProductIds(), request.getCustomerId(), request.getTotalAmount());
-        kafkaTemplate.send("order-placed", event.getOrderId(), event);
-        return ResponseEntity.accepted().body("Order accepted");
-    }
-    
-    @GetMapping("/health")
-    public String getHealth() {
-    	return "All good here";
-    }
+		OrderPlacedEvent event = new OrderPlacedEvent(correlationId, request);
+		kafkaTemplate.send("order-placed", event.getOrderId(), event);
+		return ResponseEntity.accepted().body("Order accepted");
+	}
+
+	@GetMapping("/health")
+	public String getHealth() {
+		return "All good here";
+	}
 
 }

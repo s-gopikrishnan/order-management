@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class PaymentProcessedEvent implements BaseEvent {
 
 	private String orderId;
-	private String customerId;
-	private double amount;
-
+	private OrderRequest order;
 }
